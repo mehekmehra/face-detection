@@ -2,6 +2,7 @@
 Analyzing gaze data to determine the percentage of gaze locations on faces in each frame
 ## Loading Data
 Save the video file and gaze data file to the same directory as face_detection.py. The gaze data file must have the headers:
+
 ```frame_num shot_num x y timestamp subject eyetracker_valid in_frame subject_valid_for_clip film```
 To extract the frames from the video file, you can run
 ``` ffmpeg -i myclip.mp4  'path/to/where/i/want/frames/myclip_%d.jpg' ```
