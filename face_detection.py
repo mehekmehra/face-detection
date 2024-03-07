@@ -61,6 +61,8 @@ def analyze_directory(directory, data_path, film_name):
     files = os.listdir(directory)
     frames = []
     percentages = []
+    plt_frames = []
+    plt_percentages = []
     film_data = filter_by_film(data_path, film_name)
     for image_name in files:
         image_path = directory + "/" + image_name
@@ -69,10 +71,13 @@ def analyze_directory(directory, data_path, film_name):
         percent = percent_in_box(data_path, frame_num, film_data, image_path)
         percentages += [percent]
         frames += [frame_num]
+        if percent != -1:
+            plt_frames += [int(frame_num)]
+            plt_percentages += [percent]
 
         # to test with less computation because this isn't super efficient
-        if len(frames) == 500:
-            break
+        # if len(frames) == 50:
+        #     break
     
     # writing results to a csv file
     data_rows = zip(frames, percentages)
@@ -82,6 +87,19 @@ def analyze_directory(directory, data_path, film_name):
         writer.writerow(['Frame', 'Percent Gaze on Face']) 
         writer.writerows(data_rows) 
     
+    return plt_frames, plt_percentages
+    
+def plot_percentages(directory, data_path, film_name):
+    frames, percentages = analyze_directory(directory, data_path, film_name)
+    print(len(frames), len(percentages))
+    np_frames = np.array(frames)
+    np_percentages = np.array(percentages)
+    plt.plot(np_frames, np_percentages, 'o')
+    plt.xlabel("Frame")
+    plt.ylabel("Gaze Locations on a Face (%)")
+    plt.show()
+
+
 def filter_by_film(data_path, film_name):
     """ filters the data file for entries associated with the relevant film. 
         returns an array of the entries for the film where each entry is a subarray
