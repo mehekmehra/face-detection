@@ -9,7 +9,7 @@ To extract the frames from the video file, you can run
 
 ``` ffmpeg -i myclip.mp4  'path/to/where/i/want/frames/myclip_%d.jpg' ```
 
-Ensure that all of the file names only contain a single number that corresponds to the frame number in the gaze data. Do not include any other numbers in the name. 
+Ensure that all of the file names only contain a single number that corresponds to the frame number in the gaze data. Do not include any other numbers in the name. Note that using ```%d``` numbers all of the frames appropriately except for the first one. You might have to manually add "_0" to the file name.
 
 ## Installation
 ```pip install -r requirements.txt```
@@ -20,9 +20,9 @@ Run face_detector.py
 ### Analyzing the Entire Dataset
 To get the percentage of gaze locations for each frame, run 
 
-```analyze_directory(frames_directory, data_file_path, film_name)```
+```plot_percentages(frames_directory, data_file_path, film_name)```
 
-This will save a csv file to your directory.
+This will save a csv file to your directory and will create a plot of the data.
 
 ### Visualizing Bounding Boxes
 To view where the bounding boxes on a frame are, run
